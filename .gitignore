@@ -1,2 +1,5 @@
 # All sorts of PDFs
 /*.pdf
+
+# All of node_modules
+/node_modules
