@@ -1,12 +1,12 @@
 import { describe, it, expect } from 'vitest'
-import {validate} from './validate'
+import {basic_validation, rule_validation} from './validate'
 
-describe('validate', () => {
+describe('basic_validation', () => {
     it('adds two numbers', () => {
-        expect(validate([])).toBe(false)
+        expect(basic_validation([])).toBe(false)
     })
     it('checks for correct dimensions (10x9)', () => {
-        expect(validate([
+        expect(basic_validation([
             [0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0],
@@ -19,7 +19,7 @@ describe('validate', () => {
         ])).toBe(false)
     })
     it('checks for correct dimensions (9x7)', () => {
-        expect(validate([
+        expect(basic_validation([
             [0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0],
@@ -30,7 +30,7 @@ describe('validate', () => {
         ])).toBe(false)
     })
     it('checks for correct dimensions (one row off)', () => {
-        expect(validate([
+        expect(basic_validation([
             [0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0],
@@ -43,7 +43,7 @@ describe('validate', () => {
         ])).toBe(false)
     })
     it('checks for correct dimensions (9x9)', () => {
-        expect(validate([
+        expect(basic_validation([
             [0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0],
@@ -55,8 +55,9 @@ describe('validate', () => {
             [0,0,0,0,0,0,0,0,0]
         ])).toBe(true)
     })
+
     it('checks for correct numbers (<0)', () => {
-        expect(validate([
+        expect(basic_validation([
             [0,0,0,0,0,0,0,0,0],
             [0,0,2,0,0,0,0,0,0],
             [0,4,0,0,6,0,0,0,0],
@@ -69,7 +70,7 @@ describe('validate', () => {
         ])).toBe(false)
     })
     it('checks for correct numbers (decimals)', () => {
-        expect(validate([
+        expect(basic_validation([
             [0,0,0,0,0,0,0,2,0],
             [1,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,3,0,0,0],
@@ -82,7 +83,7 @@ describe('validate', () => {
         ])).toBe(false)
     })
     it('checks for correct numbers (>0))', () => {
-        expect(validate([
+        expect(basic_validation([
             [0,0,0,0,0,0,0,2,0],
             [1,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,3,0,0,0],
@@ -95,7 +96,7 @@ describe('validate', () => {
         ])).toBe(false)
     })
     it('checks for correct numbers (valid))', () => {
-        expect(validate([
+        expect(basic_validation([
             [0,0,0,0,0,0,0,2,0],
             [1,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,3,0,0,0],
@@ -105,6 +106,155 @@ describe('validate', () => {
             [0,0,0,0,0,9,0,0,0],
             [0,5,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0]
+        ])).toBe(true)
+    })
+})
+
+describe('rule_validation', () => {
+    it('detects duplicate digits in rows', () => {
+        expect(rule_validation([
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,4,0,1,0,0,4,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0]
+        ])).toBe(false)
+    })
+    it('detects lone duplicate digits in rows', () => {
+        expect(rule_validation([
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,9,0,0,9,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0]
+        ])).toBe(false)
+    })
+    it('passes correct rows', () => {
+        expect(rule_validation([
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [1,2,3,4,5,6,7,8,9],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [9,4,5,2,3,1,6,7,8],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0]
+        ])).toBe(true)
+    })
+
+    it('detects duplicate digits in columns', () => {
+        expect(rule_validation([
+            [0,0,0,0,0,0,0,0,2],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,9],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,2],
+            [0,0,0,0,0,0,0,0,0]
+        ])).toBe(false)
+    })
+    it('detects lone duplicate digits in columns', () => {
+        expect(rule_validation([
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,3,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,3,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0]
+        ])).toBe(false)
+    })
+    it('passes correct columns', () => {
+        expect(rule_validation([
+            [0,0,1,0,0,0,0,7,0],
+            [0,0,2,0,0,0,0,5,0],
+            [0,0,3,0,0,0,0,6,0],
+            [0,0,4,0,0,0,0,3,0],
+            [0,0,5,0,0,0,0,8,0],
+            [0,0,6,0,0,0,0,9,0],
+            [0,0,7,0,0,0,0,4,0],
+            [0,0,8,0,0,0,0,1,0],
+            [0,0,9,0,0,0,0,2,0]
+        ])).toBe(true)
+    })
+
+    it('detects duplicates in subgrids', () => {
+        expect(rule_validation([
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,6,4,3,0,0,0],
+            [0,0,0,1,2,5,0,0,0],
+            [0,0,0,8,6,0,0,0,0]
+        ])).toBe(false)
+    })
+    it('detects lone duplicates in subgrids', () => {
+        expect(rule_validation([
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,1,0,0,0,0,0],
+            [0,0,0,0,1,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0]
+        ])).toBe(false)
+    })
+    it('passes valid subgrids', () => {
+        expect(rule_validation([
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,1,2,3],
+            [0,0,0,0,0,0,4,5,6],
+            [0,0,0,0,0,0,7,8,9],
+            [0,0,0,1,2,3,0,0,0],
+            [0,0,0,4,5,6,0,0,0],
+            [0,0,0,7,8,9,0,0,0]
+        ])).toBe(true)
+    })
+
+    it('passes an empty grid', () => {
+        expect(rule_validation([
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0]
+        ])).toBe(true)
+    })
+    it('passes a correct sudoku', () => {
+        expect(rule_validation([
+            [0,0,0,0,0,9,0,3,6],
+            [0,5,0,1,0,0,0,4,0],
+            [4,0,8,7,0,0,0,0,0],
+            [0,2,0,0,0,0,0,0,9],
+            [6,0,0,0,8,0,0,0,1],
+            [1,0,0,0,0,0,0,5,0],
+            [0,0,0,0,0,3,7,0,5],
+            [0,1,0,0,0,7,0,9,0],
+            [7,3,0,4,0,0,0,0,0]
         ])).toBe(true)
     })
 })
