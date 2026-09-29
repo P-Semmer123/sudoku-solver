@@ -1,0 +1,52 @@
+.tile {
+    width: 60px;
+    height: 60px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #000000;
+    display: flex;
+    justify-content: center;
+    place-items: center;
+    font-size: 37px;
+    font-weight: 500;
+}
+
+.upper-left {
+    border-top-width: 2px;
+    border-left-width: 2px;
+}
+
+.upper {
+    border-top-width: 2px;
+}
+
+.upper-right {
+    border-top-width: 2px;
+    border-right-width: 2px;
+}
+
+.left {
+    border-left-width: 2px;
+}
+
+.center {
+    border-width: 1px;
+}
+
+.right {
+    border-right-width: 2px;
+}
+
+.lower-left {
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+}
+
+.lower {
+    border-bottom-width: 2px;
+}
+
+.lower-right {
+    border-bottom-width: 2px;
+    border-right-width: 2px;
+}
