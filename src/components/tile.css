@@ -7,8 +7,15 @@
     display: flex;
     justify-content: center;
     place-items: center;
+    font-family: Roboto, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 37px;
     font-weight: 500;
+    cursor: default;
+    caret-color: #00000000
+}
+
+.tile:focus {
+    outline: none;
 }
 
 .upper-left {

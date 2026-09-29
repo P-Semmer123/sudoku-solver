@@ -32,9 +32,20 @@ function Tile({pos}: {pos: number}) {
     }
 
     return (
-        <div className={className}>
-            
-        </div>
+        <input className={className}
+            onKeyDown={(event) => {
+                if (event.currentTarget.value.length == 0 &&
+                    /[1-9]/.test(event.key)) {
+                    return;
+                }
+                
+                if (event.key == 'Backspace' || event.key == 'Delete') {
+                    event.currentTarget.value = '';
+                }
+                
+                event.preventDefault();
+            }}
+        ></input>
     )
 }
 
