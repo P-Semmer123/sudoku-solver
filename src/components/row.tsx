@@ -46,20 +46,6 @@ function Row({pos}: {pos: number}) {
         </div>
       )
   }
-
-  return (
-    <div className="row">
-        <Tile pos={1}/>
-        <Tile pos={2}/>
-        <Tile pos={3}/>
-        <Tile pos={1}/>
-        <Tile pos={2}/>
-        <Tile pos={3}/>
-        <Tile pos={1}/>
-        <Tile pos={2}/>
-        <Tile pos={3}/>
-    </div>
-  )
 }
 
 export default Row
