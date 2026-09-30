@@ -16,6 +16,7 @@
 
 .tile:focus {
     outline: none;
+    background-color: #aaaaff;
 }
 
 .upper-left {
