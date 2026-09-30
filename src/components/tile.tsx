@@ -34,12 +34,10 @@ function Tile({pos, row, col, ref, focusTile}: {pos: number, row: number, col: n
     return (
         <input className={className} data-row={row} data-col={col}
             onKeyDown={(event) => {
-                if (event.currentTarget.value.length == 0 &&
-                    /[1-9]/.test(event.key)) {
-                    return;
-                }
-
                 event.preventDefault();
+                if (/[1-9]/.test(event.key)) {
+                    event.currentTarget.value = event.key;
+                }
 
                 if (event.key === 'ArrowUp' || event.key === 'ArrowDown' || event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
                     focusTile(event.key, row, col);
