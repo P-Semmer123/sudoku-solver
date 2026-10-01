@@ -9,54 +9,62 @@ interface TileProps {
 };
 
 function Tile({pos, row, col, ref, focusTile}: TileProps) {
-    let className = "tile "
+    let className = "tile-input "
     switch(pos) {
         case 1:
-            className += "upper-left";
+            className += "upper-left-tile";
             break;
         case 2:
-            className += "upper";
+            className += "upper-tile";
             break;
         case 3:
-            className += "upper-right";
+            className += "upper-right-tile";
             break;
         case 4:
-            className += "left";
+            className += "left-tile";
             break;
         case 6:
-            className += "right";
+            className += "right-tile";
             break;
         case 7:
-            className += "lower-left";
+            className += "lower-left-tile";
             break;
         case 8:
-            className += "lower";
+            className += "lower-tile";
             break;
         case 9:
-            className += "lower-right";
+            className += "lower-right-tile";
             break;
         default:
-            className += "center";
+            className += "center-tile";
     }
 
     return (
-        <input className={className} data-row={row} data-col={col}
-            onKeyDown={(event) => {
-                event.preventDefault();
-                if (/[1-9]/.test(event.key)) {
-                    event.currentTarget.value = event.key;
-                }
+        <div className="tile">
+            <div className="notes">
+                {[...Array(9)].map((_, index) => (
+                    <div key={index}>{index + 1}</div>
+                ))}
+            </div>
+            <input className={className} data-row={row} data-col={col}
+                onKeyDown={(event) => {
+                    event.preventDefault();
+                    if (/[1-9]/.test(event.key)) {
+                        event.currentTarget.value = event.key;
+                    }
 
-                if (event.key === 'ArrowUp' || event.key === 'ArrowDown' || event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
-                    focusTile(event.key, row, col);
-                }
-                
-                if (event.key == 'Backspace' || event.key == 'Delete') {
-                    event.currentTarget.value = '';
-                }
-            }}
-            ref={ref}
-        ></input>
+                    if (event.key === 'ArrowUp' || event.key === 'ArrowDown' ||
+                        event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+                        focusTile(event.key, row, col);
+                    }
+                    
+                    if (event.key == 'Backspace' || event.key == 'Delete') {
+                        event.currentTarget.value = '';
+                    }
+                }}
+                ref={ref}
+            ></input>
+        </div>
     )
 }
 
