@@ -4,12 +4,12 @@ import './row.css'
 interface RowProps {
   pos: number,
   row: number,
+  gridSize: number,
   registerTile: ( col: number, element: HTMLInputElement) => void,
   focusTile: (key: string, row: number, col: number) => void
 }
 
-function Row({pos, row, registerTile, focusTile}: RowProps) {
-  const gridSize = 9;
+function Row({pos, row, gridSize, registerTile, focusTile}: RowProps) {
   let className: string = "row "
   let offset: number = -1;
 

@@ -6,7 +6,7 @@ function App() {
   return (
     <>
       <div className="container">
-        <Grid />
+        <Grid gridSize={9}/>
       </div>
     </>
   )

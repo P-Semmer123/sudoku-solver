@@ -2,8 +2,11 @@ import Row from './row'
 import './grid.css'
 import { useRef } from 'react';
 
-function Grid() {
-  const gridSize = 9;
+interface GridProps {
+  gridSize: number
+}
+
+function Grid({gridSize}: GridProps) {
   const tileRefs = useRef<HTMLInputElement[][]>([]);
 
   function focusTile(key: string, row: number, col: number) {
@@ -28,6 +31,7 @@ function Grid() {
         <Row
           pos={(index%3)+1}
           row={index}
+          gridSize={gridSize}
           registerTile={(col: number, element: HTMLInputElement) => {
             tileRefs.current[index] ??= [];
             tileRefs.current[index][col] = element;
