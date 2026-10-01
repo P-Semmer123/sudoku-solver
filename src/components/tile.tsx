@@ -1,6 +1,14 @@
 import './tile.css'
 
-function Tile({pos, row, col, ref, focusTile}: {pos: number, row: number, col: number, ref: (element: HTMLInputElement) => void, focusTile: (key: string, row: number, col: number) => void}) {
+interface TileProps {
+    pos: number,
+    row: number,
+    col: number,
+    ref: (element: HTMLInputElement) => void,
+    focusTile: (key: string, row: number, col: number) => void
+};
+
+function Tile({pos, row, col, ref, focusTile}: TileProps) {
     let className = "tile "
     switch(pos) {
         case 1:

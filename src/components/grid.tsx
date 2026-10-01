@@ -24,53 +24,19 @@ function Grid() {
 
   return (
     <div className="grid">
-        <Row pos={1} row={0} registerTile={(col: number, element: HTMLInputElement) => {
-          tileRefs.current[0] ??= [];
-          tileRefs.current[0][col] = element;
-        }}
-        focusTile={focusTile}/>
-        <Row pos={2} row={1} registerTile={(col: number, element: HTMLInputElement) => {
-          tileRefs.current[1] ??= [];
-          tileRefs.current[1][col] = element;
-        }}
-        focusTile={focusTile}/>
-        <Row pos={3} row={2} registerTile={(col: number, element: HTMLInputElement) => {
-          tileRefs.current[2] ??= [];
-          tileRefs.current[2][col] = element;
-        }}
-        focusTile={focusTile}/>
-        <Row pos={1} row={3} registerTile={(col: number, element: HTMLInputElement) => {
-          tileRefs.current[3] ??= [];
-          tileRefs.current[3][col] = element;
-        }}
-        focusTile={focusTile}/>
-        <Row pos={2} row={4} registerTile={(col: number, element: HTMLInputElement) => {
-          tileRefs.current[4] ??= [];
-          tileRefs.current[4][col] = element;
-        }}
-        focusTile={focusTile}/>
-        <Row pos={3} row={5} registerTile={(col: number, element: HTMLInputElement) => {
-          tileRefs.current[5] ??= [];
-          tileRefs.current[5][col] = element;
-        }}
-        focusTile={focusTile}/>
-        <Row pos={1} row={6} registerTile={(col: number, element: HTMLInputElement) => {
-          tileRefs.current[6] ??= [];
-          tileRefs.current[6][col] = element;
-        }}
-        focusTile={focusTile}/>
-        <Row pos={2} row={7} registerTile={(col: number, element: HTMLInputElement) => {
-          tileRefs.current[7] ??= [];
-          tileRefs.current[7][col] = element;
-        }}
-        focusTile={focusTile}/>
-        <Row pos={3} row={8} registerTile={(col: number, element: HTMLInputElement) => {
-          tileRefs.current[8] ??= [];
-          tileRefs.current[8][col] = element;
-        }}
-        focusTile={focusTile}/>
+      {[...Array(gridSize)].map((_, index) => (
+        <Row
+          pos={(index%3)+1}
+          row={index}
+          registerTile={(col: number, element: HTMLInputElement) => {
+            tileRefs.current[index] ??= [];
+            tileRefs.current[index][col] = element;
+          }}
+          focusTile={focusTile}
+        />
+      ))}
     </div>
-  )
+  );
 }
 
 export default Grid
