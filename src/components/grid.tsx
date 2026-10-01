@@ -10,7 +10,6 @@ function Grid({gridSize}: GridProps) {
   const tileRefs = useRef<HTMLInputElement[][]>([]);
 
   function focusTile(key: string, row: number, col: number) {
-    console.log(key, row, col);
     if (key === 'ArrowLeft') {
       tileRefs.current[row]?.[(col-1+gridSize)%gridSize]?.focus();
     }
