@@ -6,10 +6,10 @@ interface RowProps {
   row: number,
   gridSize: number,
   registerTile: ( col: number, element: HTMLInputElement) => void,
-  focusTile: (key: string, row: number, col: number) => void
+  handleInput: (key: string, row: number, col: number) => void
 }
 
-function Row({pos, row, gridSize, registerTile, focusTile}: RowProps) {
+function Row({pos, row, gridSize, registerTile, handleInput}: RowProps) {
   let className: string = "row "
   let offset: number = -1;
 
@@ -35,7 +35,7 @@ function Row({pos, row, gridSize, registerTile, focusTile}: RowProps) {
           row={row}
           col={index}
           ref={element => registerTile(index, element)}
-          focusTile={focusTile}
+          handleInput={handleInput}
         />
       ))}
     </div>

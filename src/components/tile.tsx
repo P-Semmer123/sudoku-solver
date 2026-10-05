@@ -5,10 +5,10 @@ interface TileProps {
     row: number,
     col: number,
     ref: (element: HTMLInputElement) => void,
-    focusTile: (key: string, row: number, col: number) => void
+    handleInput: (key: string, row: number, col: number) => void
 };
 
-function Tile({pos, row, col, ref, focusTile}: TileProps) {
+function Tile({pos, row, col, ref, handleInput}: TileProps) {
     let className = "tile-input "
     switch(pos) {
         case 1:
@@ -55,7 +55,7 @@ function Tile({pos, row, col, ref, focusTile}: TileProps) {
 
                     if (event.key === 'ArrowUp' || event.key === 'ArrowDown' ||
                         event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
-                        focusTile(event.key, row, col);
+                        handleInput(event.key, row, col);
                     }
                     
                     if (event.key == 'Backspace' || event.key == 'Delete') {

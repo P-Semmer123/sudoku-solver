@@ -9,18 +9,22 @@ interface GridProps {
 function Grid({gridSize}: GridProps) {
   const tileRefs = useRef<HTMLInputElement[][]>([]);
 
-  function focusTile(key: string, row: number, col: number) {
-    if (key === 'ArrowLeft') {
-      tileRefs.current[row]?.[(col-1+gridSize)%gridSize]?.focus();
-    }
-    if (key === 'ArrowRight') {
-      tileRefs.current[row]?.[(col+1)%gridSize]?.focus();
-    }
-    if (key === 'ArrowUp') {
-      tileRefs.current[(row-1+gridSize)%gridSize]?.[col]?.focus();
-    }
-    if (key === 'ArrowDown') {
-      tileRefs.current[(row+1)%gridSize]?.[col]?.focus();
+  function handleInput(key: string, row: number, col: number) {
+    switch(key) {
+      case 'ArrowLeft': 
+        tileRefs.current[row]?.[(col-1+gridSize)%gridSize]?.focus();
+        break;
+      case 'ArrowRight': 
+        tileRefs.current[row]?.[(col+1)%gridSize]?.focus();
+        break;
+      case 'ArrowUp':
+        tileRefs.current[(row-1+gridSize)%gridSize]?.[col]?.focus();
+        break;
+      case 'ArrowDown':
+        tileRefs.current[(row+1)%gridSize]?.[col]?.focus();
+        break;
+      default:
+        break;
     }
   }
 
@@ -35,7 +39,7 @@ function Grid({gridSize}: GridProps) {
             tileRefs.current[index] ??= [];
             tileRefs.current[index][col] = element;
           }}
-          focusTile={focusTile}
+          handleInput={handleInput}
         />
       ))}
     </div>
