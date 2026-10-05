@@ -3,13 +3,15 @@ import './row.css'
 
 interface RowProps {
   pos: number,
+  gridData: Array<number>,
+  noteData: Array<number>,
   row: number,
   gridSize: number,
   registerTile: ( col: number, element: HTMLInputElement) => void,
   handleInput: (key: string, row: number, col: number) => void
 }
 
-function Row({pos, row, gridSize, registerTile, handleInput}: RowProps) {
+function Row({pos, gridData, noteData, row, gridSize, registerTile, handleInput}: RowProps) {
   let className: string = "row "
   let offset: number = -1;
 
@@ -32,8 +34,11 @@ function Row({pos, row, gridSize, registerTile, handleInput}: RowProps) {
       {[...Array(gridSize)].map((_, index) => (
         <Tile
           pos={(index%3)+offset}
+          val={gridData[index]}
+          note={noteData[index]}
           row={row}
           col={index}
+          gridSize={gridSize}
           ref={element => registerTile(index, element)}
           handleInput={handleInput}
         />

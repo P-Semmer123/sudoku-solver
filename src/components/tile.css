@@ -74,19 +74,27 @@
 }
 
 .notes {
-  position: absolute;
+    position: absolute;
 
-  display: grid;
-  width: 100%;
-  height: 100%;
-  grid-template-rows: repeat(3, 1fr);
-  grid-template-columns: repeat(3, 1fr);
+    display: grid;
+    width: 100%;
+    height: 100%;
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.active-note {
+    color: #000000
+}
+
+.inactive-note {
+    color: #00000000;
 }
 
 .notes div {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-  font-size: 15px;
+    font-size: 15px;
 }

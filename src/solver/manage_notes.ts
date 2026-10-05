@@ -21,7 +21,12 @@ export function get_notes(grid: Array<Array<number>>) {
 
 // TODO: Decide whether this function checks for the entered digit to be correct,
 // i.e. only 1-9 (int) would be allowed.
-export function set_digit(row: number, col: number, digit: number, grid: Array<Array<number>>, notes: Array<Array<number>>): Array<Array<Array<number>>> {
+export function set_digit(row: number, col: number, digit: number, oldGrid: Array<Array<number>>, oldNotes: Array<Array<number>>): Array<Array<Array<number>>> {
+    // Copying the arrays or else React won't rerender them.
+    // Also, it's actually cleaner to not just modify given arrays.
+    const grid = oldGrid.map(r => [...r]);
+    const notes = oldNotes.map(r => [...r]);
+    
     const mask: number = 511 - 2**(digit-1);
     
     const sg_base_row: number = Math.trunc(row/3)*3; // sg = SubGrid

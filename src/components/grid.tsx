@@ -1,6 +1,7 @@
 import Row from './row'
 import './grid.css'
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
+import { set_digit } from '../solver/manage_notes';
 
 interface GridProps {
   gridSize: number
@@ -8,23 +9,43 @@ interface GridProps {
 
 function Grid({gridSize}: GridProps) {
   const tileRefs = useRef<HTMLInputElement[][]>([]);
+  const [gridData, setGridData] = useState<number[][]>(
+    Array.from({length: gridSize}, () => Array(gridSize).fill(0))
+  );
+  const [noteData, setNoteData] = useState<number[][]>(
+    Array.from({length: gridSize}, () => Array(gridSize).fill(511))
+  );
 
   function handleInput(key: string, row: number, col: number) {
     switch(key) {
       case 'ArrowLeft': 
         tileRefs.current[row]?.[(col-1+gridSize)%gridSize]?.focus();
-        break;
+        return;
       case 'ArrowRight': 
         tileRefs.current[row]?.[(col+1)%gridSize]?.focus();
-        break;
+        return;
       case 'ArrowUp':
         tileRefs.current[(row-1+gridSize)%gridSize]?.[col]?.focus();
-        break;
+        return;
       case 'ArrowDown':
         tileRefs.current[(row+1)%gridSize]?.[col]?.focus();
-        break;
+        return;
       default:
         break;
+    }
+
+    if (/[1-9]/.test(key)) {
+      const [newGridData, newNoteData] = set_digit(row, col, Number(key), gridData, noteData);
+      setGridData(newGridData);
+      setNoteData(newNoteData);
+    }
+    
+    if (key == 'Backspace' || key == 'Delete') {
+      const newGridData = [...gridData];
+      newGridData[row] = [...newGridData[row]];
+      newGridData[row][col] = 0;
+
+      setGridData(newGridData);
     }
   }
 
@@ -33,6 +54,8 @@ function Grid({gridSize}: GridProps) {
       {[...Array(gridSize)].map((_, index) => (
         <Row
           pos={(index%3)+1}
+          gridData={gridData[index]}
+          noteData={noteData[index]}
           row={index}
           gridSize={gridSize}
           registerTile={(col: number, element: HTMLInputElement) => {

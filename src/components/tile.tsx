@@ -2,14 +2,18 @@ import './tile.css'
 
 interface TileProps {
     pos: number,
+    val: number,
+    note: number,
     row: number,
     col: number,
+    gridSize: number,
     ref: (element: HTMLInputElement) => void,
     handleInput: (key: string, row: number, col: number) => void
 };
 
-function Tile({pos, row, col, ref, handleInput}: TileProps) {
+function Tile({pos, val, note, row, col, gridSize, ref, handleInput}: TileProps) {
     let className = "tile-input "
+
     switch(pos) {
         case 1:
             className += "upper-left-tile";
@@ -39,28 +43,33 @@ function Tile({pos, row, col, ref, handleInput}: TileProps) {
             className += "center-tile";
     }
 
+    const noteStates: Array<string> = parseNote(note);
+
+    function parseNote(note: number) {
+        const noteStates: Array<string> = new Array<string>(9);
+
+        for (let i = 0; i < gridSize; ++i) {
+            noteStates[i] = note & 2**i ? "active-note" : "inactive-note";
+        }
+
+        return noteStates;
+    }
+
     return (
         <div className="tile">
             <div className="notes">
-                {[...Array(9)].map((_, index) => (
-                    <div key={index}>{index + 1}</div>
+                {[...Array(gridSize)].map((_, index) => (
+                    <div className = {noteStates[index]} key={index}>{index + 1}</div>
                 ))}
             </div>
-            <input className={className} data-row={row} data-col={col}
+            <input
+                className={className}
+                value={val === 0 ? '' : val}
+                data-row={row}
+                data-col={col}
                 onKeyDown={(event) => {
                     event.preventDefault();
-                    if (/[1-9]/.test(event.key)) {
-                        event.currentTarget.value = event.key;
-                    }
-
-                    if (event.key === 'ArrowUp' || event.key === 'ArrowDown' ||
-                        event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
-                        handleInput(event.key, row, col);
-                    }
-                    
-                    if (event.key == 'Backspace' || event.key == 'Delete') {
-                        event.currentTarget.value = '';
-                    }
+                    handleInput(event.key, row, col);
                 }}
                 ref={ref}
             ></input>
