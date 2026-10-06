@@ -4,6 +4,10 @@
     height: 60px;
 }
 
+.tile:has(input:focus) {
+    z-index: 2;
+}
+
 .tile-input {
     position: absolute;
     width: 100%;
@@ -31,7 +35,10 @@
 }
 
 .tile-input:focus {
-    outline: none;
+    outline-color: #101080;
+    outline-width: 4px;
+    outline-style: solid;
+    outline-offset: -2px;
     background-color: #aaaaff;
 }
 
