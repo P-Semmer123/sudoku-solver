@@ -25,7 +25,9 @@
     font-weight: 500;
     
     cursor: default;
-    caret-color: #00000000
+    caret-color: #00000000;
+
+    z-index: 1;
 }
 
 .tile-input:focus {
@@ -81,6 +83,9 @@
     height: 100%;
     grid-template-rows: repeat(3, 1fr);
     grid-template-columns: repeat(3, 1fr);
+
+    pointer-events: none;
+    z-index: 2;
 }
 
 .active-note {
