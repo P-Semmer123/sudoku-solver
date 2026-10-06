@@ -44,6 +44,10 @@ function Grid({gridSize}: GridProps) {
         return;
       }
       if (editNotes) {
+        // Prevent note editing when tile already has number in it
+        if (gridData[row][col]) {
+          return;
+        }
         const newNoteData = [...noteData];
         newNoteData[row] = [...newNoteData[row]];
         newNoteData[row][col] = noteData[row][col] ^ 2**(Number(key)-1);
