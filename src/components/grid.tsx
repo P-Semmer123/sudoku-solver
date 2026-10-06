@@ -15,6 +15,7 @@ function Grid({gridSize}: GridProps) {
   const [noteData, setNoteData] = useState<number[][]>(
     Array.from({length: gridSize}, () => Array(gridSize).fill(511))
   );
+  const [editNotes, setEditNotes] = useState<boolean>(false);
 
   function handleInput(key: string, row: number, col: number) {
     switch(key) {
@@ -30,14 +31,28 @@ function Grid({gridSize}: GridProps) {
       case 'ArrowDown':
         tileRefs.current[(row+1)%gridSize]?.[col]?.focus();
         return;
+      case ' ':
+        setEditNotes(!editNotes);
+        return;
       default:
         break;
     }
 
     if (/[1-9]/.test(key)) {
-      const [newGridData, newNoteData] = set_digit(row, col, Number(key), gridData, noteData);
-      setGridData(newGridData);
-      setNoteData(newNoteData);
+      // Sort out F-keys
+      if (key[0] === 'F') {
+        return;
+      }
+      if (editNotes) {
+        const newNoteData = [...noteData];
+        newNoteData[row] = [...newNoteData[row]];
+        newNoteData[row][col] = noteData[row][col] ^ 2**(Number(key)-1);
+        setNoteData(newNoteData);
+      } else {
+        const [newGridData, newNoteData] = set_digit(row, col, Number(key), gridData, noteData);
+        setGridData(newGridData);
+        setNoteData(newNoteData);
+      }
     }
     
     if (key == 'Backspace' || key == 'Delete') {
