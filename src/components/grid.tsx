@@ -1,21 +1,31 @@
 import Row from './row'
 import './grid.css'
-import { useRef, useState } from 'react';
-import { set_digit } from '../solver/manage_notes';
+import { forwardRef, useImperativeHandle, useRef, useState } from 'react';
+import { set_digit, get_notes } from '../solver/manage_notes';
 
 interface GridProps {
   gridSize: number
 }
 
-function Grid({gridSize}: GridProps) {
+interface GridHandle {
+  genNotes: () => void
+}
+
+function Grid({gridSize}: GridProps, ref: React.ForwardedRef<GridHandle>) {
   const tileRefs = useRef<HTMLInputElement[][]>([]);
   const [gridData, setGridData] = useState<number[][]>(
     Array.from({length: gridSize}, () => Array(gridSize).fill(0))
   );
   const [noteData, setNoteData] = useState<number[][]>(
-    Array.from({length: gridSize}, () => Array(gridSize).fill(511))
+    Array.from({length: gridSize}, () => Array(gridSize).fill(0))
   );
   const [editNotes, setEditNotes] = useState<boolean>(false);
+
+  useImperativeHandle(ref, () => ({
+    genNotes() {
+      setNoteData(get_notes(gridData))
+    }
+  }))
 
   function handleInput(key: string, row: number, col: number) {
     switch(key) {
@@ -88,4 +98,4 @@ function Grid({gridSize}: GridProps) {
   );
 }
 
-export default Grid
+export default forwardRef(Grid)
