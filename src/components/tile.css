@@ -31,15 +31,19 @@
     cursor: default;
     caret-color: #00000000;
 
-    z-index: 1;
+    z-index: 1; 
+}
+
+.tile-input.highlighted {
+    background-color: #ffc480;
 }
 
 .tile-input:focus {
-    outline-color: #101080;
+    outline-color: #805000;
     outline-width: 4px;
     outline-style: solid;
     outline-offset: -2px;
-    background-color: #aaaaff;
+    background-color: #ff8c00;
 }
 
 .upper-left-tile {
@@ -95,14 +99,6 @@
     z-index: 2;
 }
 
-.active-note {
-    color: #000000
-}
-
-.inactive-note {
-    color: #00000000;
-}
-
 .notes div {
     display: flex;
     align-items: center;
@@ -110,3 +106,17 @@
 
     font-size: 15px;
 }
+
+.active-note {
+    color: #000000;
+}
+
+.active-note.highlighted {
+    color: #ff8c00;
+    font-weight: 600;
+}
+
+.inactive-note {
+    color: #00000000;
+}
+

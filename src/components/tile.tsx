@@ -4,6 +4,7 @@ interface TileProps {
     pos: number,
     val: number,
     note: number,
+    activeNum: number,
     row: number,
     col: number,
     gridSize: number,
@@ -11,7 +12,7 @@ interface TileProps {
     handleInput: (key: string, row: number, col: number) => void
 };
 
-function Tile({pos, val, note, row, col, gridSize, ref, handleInput}: TileProps) {
+function Tile({pos, val, note, activeNum, row, col, gridSize, ref, handleInput}: TileProps) {
     let className = "tile-input "
 
     switch(pos) {
@@ -43,13 +44,16 @@ function Tile({pos, val, note, row, col, gridSize, ref, handleInput}: TileProps)
             className += "center-tile";
     }
 
+    className += val == activeNum ? " highlighted" : "";
+
     const noteStates: Array<string> = parseNote(note);
 
     function parseNote(note: number) {
         const noteStates: Array<string> = new Array<string>(9);
 
         for (let i = 0; i < gridSize; ++i) {
-            noteStates[i] = note & 2**i ? "active-note" : "inactive-note";
+            noteStates[i] = (note & 2**i) ? "active-note" : "inactive-note";
+            noteStates[i] += (i+1 == activeNum) ? " highlighted" : "";
         }
 
         return noteStates;

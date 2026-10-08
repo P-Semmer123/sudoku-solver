@@ -20,6 +20,7 @@ function Grid({gridSize}: GridProps, ref: React.ForwardedRef<GridHandle>) {
     Array.from({length: gridSize}, () => Array(gridSize).fill(0))
   );
   const [editNotes, setEditNotes] = useState<boolean>(false);
+  const [activeNum, setActiveNum] = useState<number>(-1);
 
   useImperativeHandle(ref, () => ({
     genNotes() {
@@ -29,17 +30,11 @@ function Grid({gridSize}: GridProps, ref: React.ForwardedRef<GridHandle>) {
 
   function handleInput(key: string, row: number, col: number) {
     switch(key) {
-      case 'ArrowLeft': 
-        tileRefs.current[row]?.[(col-1+gridSize)%gridSize]?.focus();
-        return;
-      case 'ArrowRight': 
-        tileRefs.current[row]?.[(col+1)%gridSize]?.focus();
-        return;
+      case 'ArrowLeft':
+      case 'ArrowRight':
       case 'ArrowUp':
-        tileRefs.current[(row-1+gridSize)%gridSize]?.[col]?.focus();
-        return;
       case 'ArrowDown':
-        tileRefs.current[(row+1)%gridSize]?.[col]?.focus();
+        changeFocus(key, row, col);
         return;
       case ' ':
         setEditNotes(!editNotes);
@@ -53,6 +48,7 @@ function Grid({gridSize}: GridProps, ref: React.ForwardedRef<GridHandle>) {
       if (key[0] === 'F') {
         return;
       }
+      setActiveNum(Number(key));
       if (editNotes) {
         // Prevent note editing when tile already has number in it
         if (gridData[row][col]) {
@@ -78,6 +74,31 @@ function Grid({gridSize}: GridProps, ref: React.ForwardedRef<GridHandle>) {
     }
   }
 
+  function changeFocus(key: string, row: number, col: number) {
+    let newRow = row;
+    let newCol = col;
+
+    switch(key) {
+      case 'ArrowLeft':
+        newCol = (col-1+gridSize)%gridSize;
+        break;
+      case 'ArrowRight':
+        newCol = (col+1)%gridSize;
+        break;
+      case 'ArrowUp':
+        newRow = (row-1+gridSize)%gridSize;
+        break;
+      case 'ArrowDown':
+        newRow = (row+1)%gridSize;
+        break;
+    }
+    
+    setActiveNum(gridData[newRow][newCol] ? gridData[newRow][newCol] : -1);
+
+    tileRefs.current[newRow]?.[newCol]?.focus();
+    return;
+  }
+
   return (
     <div className="grid">
       {[...Array(gridSize)].map((_, index) => (
@@ -85,6 +106,7 @@ function Grid({gridSize}: GridProps, ref: React.ForwardedRef<GridHandle>) {
           pos={(index%3)+1}
           gridData={gridData[index]}
           noteData={noteData[index]}
+          activeNum={activeNum}
           row={index}
           gridSize={gridSize}
           registerTile={(col: number, element: HTMLInputElement) => {
