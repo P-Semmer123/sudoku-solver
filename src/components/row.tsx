@@ -9,10 +9,11 @@ interface RowProps {
   row: number,
   gridSize: number,
   registerTile: ( col: number, element: HTMLInputElement) => void,
-  handleInput: (key: string, row: number, col: number) => void
+  handleInput: (key: string, row: number, col: number) => void,
+  handleClick: (row: number, col: number) => void
 }
 
-function Row({pos, gridData, noteData, activeNum, row, gridSize, registerTile, handleInput}: RowProps) {
+function Row({pos, gridData, noteData, activeNum, row, gridSize, registerTile, handleInput, handleClick}: RowProps) {
   let className: string = "row "
   let offset: number = -1;
 
@@ -43,6 +44,7 @@ function Row({pos, gridData, noteData, activeNum, row, gridSize, registerTile, h
           gridSize={gridSize}
           ref={element => registerTile(index, element)}
           handleInput={handleInput}
+          handleClick={handleClick}
         />
       ))}
     </div>

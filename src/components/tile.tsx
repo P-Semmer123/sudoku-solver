@@ -10,9 +10,10 @@ interface TileProps {
     gridSize: number,
     ref: (element: HTMLInputElement) => void,
     handleInput: (key: string, row: number, col: number) => void
+    handleClick: (row: number, col: number) => void
 };
 
-function Tile({pos, val, note, activeNum, row, col, gridSize, ref, handleInput}: TileProps) {
+function Tile({pos, val, note, activeNum, row, col, gridSize, ref, handleInput, handleClick}: TileProps) {
     let className = "tile-input "
 
     switch(pos) {
@@ -74,6 +75,9 @@ function Tile({pos, val, note, activeNum, row, col, gridSize, ref, handleInput}:
                 onKeyDown={(event) => {
                     event.preventDefault();
                     handleInput(event.key, row, col);
+                }}
+                onClick={() => {
+                    handleClick(row, col);
                 }}
                 ref={ref}
             ></input>

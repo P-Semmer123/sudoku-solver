@@ -74,6 +74,10 @@ function Grid({gridSize}: GridProps, ref: React.ForwardedRef<GridHandle>) {
     }
   }
 
+  function handleClick(row: number, col: number) {
+    setActiveNum(gridData[row][col] ? gridData[row][col] : -1);
+  }
+
   function changeFocus(key: string, row: number, col: number) {
     let newRow = row;
     let newCol = col;
@@ -114,6 +118,7 @@ function Grid({gridSize}: GridProps, ref: React.ForwardedRef<GridHandle>) {
             tileRefs.current[index][col] = element;
           }}
           handleInput={handleInput}
+          handleClick={handleClick}
         />
       ))}
     </div>
