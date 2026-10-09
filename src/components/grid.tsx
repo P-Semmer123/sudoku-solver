@@ -21,6 +21,8 @@ function Grid({gridSize}: GridProps, ref: React.ForwardedRef<GridHandle>) {
   );
   const [editNotes, setEditNotes] = useState<boolean>(false);
   const [activeNum, setActiveNum] = useState<number>(-1);
+  const [impactRow, setImpactRow] = useState<number>(-1);
+  const [impactCol, setImpactCol] = useState<number>(-1);
 
   useImperativeHandle(ref, () => ({
     genNotes() {
@@ -76,6 +78,8 @@ function Grid({gridSize}: GridProps, ref: React.ForwardedRef<GridHandle>) {
 
   function handleClick(row: number, col: number) {
     setActiveNum(gridData[row][col] ? gridData[row][col] : -1);
+    setImpactRow(row);
+    setImpactCol(col);
   }
 
   function changeFocus(key: string, row: number, col: number) {
@@ -85,15 +89,19 @@ function Grid({gridSize}: GridProps, ref: React.ForwardedRef<GridHandle>) {
     switch(key) {
       case 'ArrowLeft':
         newCol = (col-1+gridSize)%gridSize;
+        setImpactCol(newCol);
         break;
       case 'ArrowRight':
         newCol = (col+1)%gridSize;
+        setImpactCol(newCol);
         break;
       case 'ArrowUp':
         newRow = (row-1+gridSize)%gridSize;
+        setImpactRow(newRow);
         break;
       case 'ArrowDown':
         newRow = (row+1)%gridSize;
+        setImpactRow(newRow);
         break;
     }
     
@@ -111,6 +119,8 @@ function Grid({gridSize}: GridProps, ref: React.ForwardedRef<GridHandle>) {
           gridData={gridData[index]}
           noteData={noteData[index]}
           activeNum={activeNum}
+          impactRow={impactRow}
+          impactCol={impactCol}
           row={index}
           gridSize={gridSize}
           registerTile={(col: number, element: HTMLInputElement) => {

@@ -5,6 +5,8 @@ interface TileProps {
     val: number,
     note: number,
     activeNum: number,
+    impactRow: number,
+    impactCol: number,
     row: number,
     col: number,
     gridSize: number,
@@ -13,7 +15,7 @@ interface TileProps {
     handleClick: (row: number, col: number) => void
 };
 
-function Tile({pos, val, note, activeNum, row, col, gridSize, ref, handleInput, handleClick}: TileProps) {
+function Tile({pos, val, note, activeNum, impactRow, impactCol, row, col, gridSize, ref, handleInput, handleClick}: TileProps) {
     let className = "tile-input "
 
     switch(pos) {
@@ -46,6 +48,19 @@ function Tile({pos, val, note, activeNum, row, col, gridSize, ref, handleInput, 
     }
 
     className += val == activeNum ? " highlighted" : "";
+
+    if (row == impactRow && col == impactCol) {
+        className += " focused"
+    }
+    if (row == impactRow && col != impactCol) {
+        className += " in-impact";
+    } else if (col == impactCol && row != impactRow) {
+        className += " in-impact";
+    } else if (row != impactRow &&
+               Math.trunc(row/3) == Math.trunc(impactRow/3) &&
+               Math.trunc(col/3) == Math.trunc(impactCol/3)) {
+        className += " in-impact";
+    }
 
     const noteStates: Array<string> = parseNote(note);
 

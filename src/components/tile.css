@@ -34,11 +34,16 @@
     z-index: 1; 
 }
 
+.tile-input.in-impact {
+    background-color: #ffe7cc;
+}
+
 .tile-input.highlighted {
     background-color: #ffc480;
 }
 
-.tile-input:focus {
+.tile-input:focus,
+.tile-input.focused {
     outline-color: #805000;
     outline-width: 4px;
     outline-style: solid;
