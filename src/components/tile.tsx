@@ -16,35 +16,35 @@ interface TileProps {
 };
 
 function Tile({pos, val, note, activeNum, impactRow, impactCol, row, col, gridSize, ref, handleInput, handleClick}: TileProps) {
-    let className = "tile-input "
+    let className = "tile "
 
     switch(pos) {
         case 1:
-            className += "upper-left-tile";
+            className += "upper-left";
             break;
         case 2:
-            className += "upper-tile";
+            className += "upper";
             break;
         case 3:
-            className += "upper-right-tile";
+            className += "upper-right";
             break;
         case 4:
-            className += "left-tile";
+            className += "left";
             break;
         case 6:
-            className += "right-tile";
+            className += "right";
             break;
         case 7:
-            className += "lower-left-tile";
+            className += "lower-left";
             break;
         case 8:
-            className += "lower-tile";
+            className += "lower";
             break;
         case 9:
-            className += "lower-right-tile";
+            className += "lower-right";
             break;
         default:
-            className += "center-tile";
+            className += "center";
     }
 
     className += val == activeNum ? " highlighted" : "";
@@ -76,14 +76,14 @@ function Tile({pos, val, note, activeNum, impactRow, impactCol, row, col, gridSi
     }
 
     return (
-        <div className="tile">
+        <div className={className}>
             <div className="notes">
                 {[...Array(gridSize)].map((_, index) => (
                     <div className = {noteStates[index]} key={index}>{index + 1}</div>
                 ))}
             </div>
             <input
-                className={className}
+                className="tile-input"
                 value={val === 0 ? '' : val}
                 data-row={row}
                 data-col={col}

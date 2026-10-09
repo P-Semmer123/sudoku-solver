@@ -34,16 +34,16 @@
     z-index: 1; 
 }
 
-.tile-input.in-impact {
+.in-impact input {
     background-color: #ffe7cc;
 }
 
-.tile-input.highlighted {
+.highlighted input {
     background-color: #ffc480;
 }
 
 .tile-input:focus,
-.tile-input.focused {
+.focused input {
     outline-color: #805000;
     outline-width: 4px;
     outline-style: solid;
@@ -51,45 +51,46 @@
     background-color: #ff8c00;
 }
 
-.upper-left-tile {
+.upper-left input {
     border-top-width: 2px;
     border-left-width: 2px;
 }
 
-.upper-tile {
+.upper input {
     border-top-width: 2px;
 }
 
-.upper-right-tile {
+.upper-right input {
     border-top-width: 2px;
     border-right-width: 2px;
 }
 
-.left-tile {
+.left input {
     border-left-width: 2px;
 }
 
-.center-tile {
+.center input {
     border-width: 1px;
 }
 
-.right-tile {
+.right input {
     border-right-width: 2px;
 }
 
-.lower-left-tile {
+.lower-left input {
     border-bottom-width: 2px;
     border-left-width: 2px;
 }
 
-.lower-tile {
+.lower input {
     border-bottom-width: 2px;
 }
 
-.lower-right-tile {
+.lower-right input {
     border-bottom-width: 2px;
     border-right-width: 2px;
 }
+
 
 .notes {
     position: absolute;
@@ -118,6 +119,11 @@
 
 .active-note.highlighted {
     color: #ff8c00;
+    font-weight: 600;
+}
+
+.focused .active-note.highlighted {
+    color: #ffe7cc;
     font-weight: 600;
 }
 
