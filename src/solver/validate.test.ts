@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest'
-import {basic_validation, rule_validation} from './validate'
+import {basic_validation, rule_validation, check_solved} from './validate'
 
+// TODO: When adding non-9x9 grid support, add test accordingly
 describe('basic_validation', () => {
     it('adds two numbers', () => {
         expect(basic_validation([])).toBe(false)
@@ -255,6 +256,61 @@ describe('rule_validation', () => {
             [0,0,0,0,0,3,7,0,5],
             [0,1,0,0,0,7,0,9,0],
             [7,3,0,4,0,0,0,0,0]
+        ])).toBe(true)
+    })
+})
+
+describe('check_solved', () => {
+    it('does not pass an empty sudoku', () => {
+        expect(check_solved([
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0]
+        ])).toBe(false)
+    })
+    it('does not pass a sudoku filled with fives', () => {
+        expect(check_solved([
+            [5,5,5,5,5,5,5,5,5],
+            [5,5,5,5,5,5,5,5,5],
+            [5,5,5,5,5,5,5,5,5],
+            [5,5,5,5,5,5,5,5,5],
+            [5,5,5,5,5,5,5,5,5],
+            [5,5,5,5,5,5,5,5,5],
+            [5,5,5,5,5,5,5,5,5],
+            [5,5,5,5,5,5,5,5,5],
+            [5,5,5,5,5,5,5,5,5]
+        ])).toBe(false)
+    })
+    it('does not pass a sudoku with incorrect subgrids', () => {
+        expect(check_solved([
+            [1,2,3,4,5,6,7,8,9],
+            [9,1,2,3,4,5,6,7,8],
+            [8,9,1,2,3,4,5,6,7],
+            [7,8,9,1,2,3,4,5,6],
+            [6,7,8,9,1,2,3,4,5],
+            [5,6,7,8,9,1,2,3,4],
+            [4,5,6,7,8,9,1,2,3],
+            [3,4,5,6,7,8,9,1,2],
+            [2,3,4,5,6,7,8,9,1]
+        ])).toBe(false)
+    })
+    it('passes a correctly solved sudoku', () => {
+        expect(check_solved([
+            [6,8,3,5,4,9,1,7,2],
+            [2,4,5,3,7,1,9,6,8],
+            [1,7,9,6,8,2,3,4,5],
+            [9,6,1,2,3,4,5,8,7],
+            [3,5,8,7,1,6,4,2,9],
+            [4,2,7,8,9,5,6,3,1],
+            [8,9,2,1,6,3,7,5,4],
+            [5,1,6,4,2,7,8,9,3],
+            [7,3,4,9,5,8,2,1,6]
         ])).toBe(true)
     })
 })

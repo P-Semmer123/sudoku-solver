@@ -2,6 +2,7 @@ export function validate(grid: Array<Array<number>>) {
     return basic_validation(grid) && rule_validation(grid);
 }
 
+// TODO: Make this function compatible with non-9x9 grids
 export function basic_validation(grid: Array<Array<number>>) {
     // check for null or undefined
     if (grid == null) {
@@ -77,4 +78,34 @@ export function rule_validation(grid: Array<Array<number>>) {
     }
 
     return true;
+}
+
+export function check_solved(grid: Array<Array<number>>): boolean {
+    // some basic tests to be sure the input isn't malformed
+    if (!basic_validation(grid)) {
+        return false;
+    }
+
+    const target_sum: number = (grid.length * (grid.length + 1))/2;
+
+    // quickly check rows for correct sum
+    for (let i = 0; i < grid.length; ++i) {
+        const sum = grid[i].reduce((acc, n) => acc + n, 0);
+        if (sum != target_sum) {
+            return false;
+        }
+    }
+
+    // quickly check columns for correct sum
+    for (let i = 0; i < grid.length; ++i) {
+        const col = grid.map(row => row[i]);
+        const sum = col.reduce((acc, n) => acc + n, 0);
+        if (sum != target_sum) {
+            return false;
+        }
+    }
+
+    // so far, a 9x9 grid filled entirely with fives would have survived
+    // thus, thorough check of rules
+    return rule_validation(grid);
 }
