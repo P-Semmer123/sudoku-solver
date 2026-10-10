@@ -2,6 +2,7 @@ import Row from './row'
 import './grid.css'
 import { forwardRef, useImperativeHandle, useRef, useState } from 'react';
 import { set_digit, get_notes } from '../solver/manage_notes';
+import { check_solved } from '../solver/validate';
 
 interface GridProps {
   gridSize: number
@@ -20,6 +21,7 @@ function Grid({gridSize}: GridProps, ref: React.ForwardedRef<GridHandle>) {
     Array.from({length: gridSize}, () => Array(gridSize).fill(0))
   );
   const [editNotes, setEditNotes] = useState<boolean>(false);
+  const [solved, setSolved] = useState<boolean>(false);
   const [activeNum, setActiveNum] = useState<number>(-1);
   const [impactRow, setImpactRow] = useState<number>(-1);
   const [impactCol, setImpactCol] = useState<number>(-1);
@@ -64,6 +66,7 @@ function Grid({gridSize}: GridProps, ref: React.ForwardedRef<GridHandle>) {
         const [newGridData, newNoteData] = set_digit(row, col, Number(key), gridData, noteData);
         setGridData(newGridData);
         setNoteData(newNoteData);
+        setSolved(check_solved(newGridData));
       }
     }
     
@@ -111,8 +114,11 @@ function Grid({gridSize}: GridProps, ref: React.ForwardedRef<GridHandle>) {
     return;
   }
 
+  let className: string = "grid";
+  className += solved ? " solved" : "";
+
   return (
-    <div className="grid">
+    <div className={className}>
       {[...Array(gridSize)].map((_, index) => (
         <Row
           pos={(index%3)+1}
@@ -129,6 +135,7 @@ function Grid({gridSize}: GridProps, ref: React.ForwardedRef<GridHandle>) {
           }}
           handleInput={handleInput}
           handleClick={handleClick}
+          solved={solved}
         />
       ))}
     </div>

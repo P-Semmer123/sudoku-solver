@@ -12,10 +12,11 @@ interface RowProps {
   gridSize: number,
   registerTile: ( col: number, element: HTMLInputElement) => void,
   handleInput: (key: string, row: number, col: number) => void,
-  handleClick: (row: number, col: number) => void
+  handleClick: (row: number, col: number) => void,
+  solved: boolean
 }
 
-function Row({pos, gridData, noteData, activeNum, impactRow, impactCol, row, gridSize, registerTile, handleInput, handleClick}: RowProps) {
+function Row({pos, gridData, noteData, activeNum, impactRow, impactCol, row, gridSize, registerTile, handleInput, handleClick, solved}: RowProps) {
   let className: string = "row "
   let offset: number = -1;
 
@@ -49,6 +50,7 @@ function Row({pos, gridData, noteData, activeNum, impactRow, impactCol, row, gri
           ref={element => registerTile(index, element)}
           handleInput={handleInput}
           handleClick={handleClick}
+          solved={solved}
         />
       ))}
     </div>

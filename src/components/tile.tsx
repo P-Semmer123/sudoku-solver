@@ -11,11 +11,12 @@ interface TileProps {
     col: number,
     gridSize: number,
     ref: (element: HTMLInputElement) => void,
-    handleInput: (key: string, row: number, col: number) => void
-    handleClick: (row: number, col: number) => void
+    handleInput: (key: string, row: number, col: number) => void,
+    handleClick: (row: number, col: number) => void,
+    solved: boolean
 };
 
-function Tile({pos, val, note, activeNum, impactRow, impactCol, row, col, gridSize, ref, handleInput, handleClick}: TileProps) {
+function Tile({pos, val, note, activeNum, impactRow, impactCol, row, col, gridSize, ref, handleInput, handleClick, solved}: TileProps) {
     let className = "tile "
 
     switch(pos) {
@@ -62,6 +63,8 @@ function Tile({pos, val, note, activeNum, impactRow, impactCol, row, col, gridSi
         className += " in-impact";
     }
 
+    className += solved ? " solved" : "";
+
     const noteStates: Array<string> = parseNote(note);
 
     function parseNote(note: number) {
@@ -76,7 +79,11 @@ function Tile({pos, val, note, activeNum, impactRow, impactCol, row, col, gridSi
     }
 
     return (
-        <div className={className}>
+        <div className={className}
+            style={{
+                "--delay": `${(row + col) * 100}ms`
+            } as React.CSSProperties}
+        >
             <div className="notes">
                 {[...Array(gridSize)].map((_, index) => (
                     <div className = {noteStates[index]} key={index}>{index + 1}</div>

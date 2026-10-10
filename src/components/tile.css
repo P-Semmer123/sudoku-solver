@@ -51,6 +51,35 @@
     background-color: #ff8c00;
 }
 
+.tile::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: #80ff80;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 2;
+    mix-blend-mode: multiply;
+}
+
+.tile.solved::after {
+    animation-name: green-pulse;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out both;
+    animation-delay: var(--delay);
+    /*animation-iteration-count: 3;*/
+}
+
+@keyframes green-pulse {
+    0%, 100% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
 .upper-left input {
     border-top-width: 2px;
     border-left-width: 2px;
@@ -102,7 +131,7 @@
     grid-template-columns: repeat(3, 1fr);
 
     pointer-events: none;
-    z-index: 2;
+    z-index: 3;
 }
 
 .notes div {
