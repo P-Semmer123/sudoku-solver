@@ -4,6 +4,7 @@
     height: 60px;
 }
 
+/*Needed or else outline would be covered by neighboring tiles*/
 .tile:has(input:focus) {
     z-index: 2;
 }
@@ -20,6 +21,7 @@
     
     background-color: #00000000;
     
+    /*sets number in the center of the tile*/
     display: flex;
     justify-content: center;
     place-items: center;
@@ -28,10 +30,10 @@
     font-size: 37px;
     font-weight: 500;
     
-    cursor: default;
-    caret-color: #00000000;
+    cursor: default; /*hides the input nature a little*/
+    caret-color: #00000000; /*further hiding the input nature*/
 
-    z-index: 1; 
+    z-index: 1; /*set to be below notes*/
 }
 
 .in-impact input {
@@ -42,6 +44,7 @@
     background-color: #ffc480;
 }
 
+/*TODO: Get rid of this double declaration*/
 .tile-input:focus,
 .focused input {
     outline-color: #805000;
@@ -51,15 +54,16 @@
     background-color: #ff8c00;
 }
 
+/*after creates an independent layer that is used for the winning animation*/
 .tile::after {
-    content: "";
+    content: ""; /*needed or else after wouldn't render*/
     position: absolute;
     inset: 0;
     background: #80ff80;
     opacity: 0;
-    pointer-events: none;
-    z-index: 2;
-    mix-blend-mode: multiply;
+    pointer-events: none; /*needed or else input couldn't be clicked*/
+    z-index: 2; /*between notes (which shouldn't matter in a solved sudoku) and above input*/
+    mix-blend-mode: multiply; /*default additive would overpaint input values*/
 }
 
 .tile.solved::after {
@@ -67,9 +71,10 @@
     animation-duration: 1s;
     animation-timing-function: ease-in-out both;
     animation-delay: var(--delay);
-    /*animation-iteration-count: 3;*/
+    /*animation-iteration-count: 3; TODO: Make iteration count dependent on sudoku difficulty*/
 }
 
+/*winning animation*/
 @keyframes green-pulse {
     0%, 100% {
         opacity: 0;
@@ -80,6 +85,7 @@
     }
 }
 
+/*Different border widths depending on position of the tile*/
 .upper-left input {
     border-top-width: 2px;
     border-left-width: 2px;
@@ -120,6 +126,7 @@
     border-right-width: 2px;
 }
 
+/*Note styling*/
 
 .notes {
     position: absolute;
@@ -127,14 +134,15 @@
     display: grid;
     width: 100%;
     height: 100%;
-    grid-template-rows: repeat(3, 1fr);
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr); /*fr -> FRactional unit*/
+    grid-template-columns: repeat(3, 1fr); /*here, 1/3 of the tile width/height*/
 
-    pointer-events: none;
-    z-index: 3;
+    pointer-events: none; /*needed or else input couldn't be clicked*/
+    z-index: 3; /*render above input*/
 }
 
 .notes div {
+    /*positions each note nicely*/
     display: flex;
     align-items: center;
     justify-content: center;
@@ -146,17 +154,18 @@
     color: #000000;
 }
 
+.inactive-note {
+    color: #00000000;
+}
+
 .active-note.highlighted {
     color: #ff8c00;
     font-weight: 600;
 }
 
+/*needed or else note would be "invisible" after being typed*/
 .focused .active-note.highlighted {
     color: #ffe7cc;
     font-weight: 600;
-}
-
-.inactive-note {
-    color: #00000000;
 }
 
