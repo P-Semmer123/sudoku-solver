@@ -12,7 +12,7 @@ export function solve(oldGrid: Array<Array<number>>, oldNotes: Array<Array<numbe
     let iter_cnt = 0;
 
     while(!check_solved(grid) && iter_cnt < max_iter) {
-        [grid, notes] = cannons(grid, notes);
+        notes = cannons(notes);
         [grid, notes] = onlys(grid, notes);
         [grid, notes] = twins(grid, notes);
         //TODO: [grid, notes] = triplets(grid, notes);
