@@ -14,7 +14,7 @@ export function solve(oldGrid: Array<Array<number>>, oldNotes: Array<Array<numbe
 
     while(!check_solved(grid) && iter_cnt < max_iter) {
         notes = cannons(notes);
-        [grid, notes] = onlys(grid, notes);
+        notes = onlys(notes);
         [grid, notes] = twins(grid, notes);
         //TODO: [grid, notes] = triplets(grid, notes);
         [grid, notes] = last_possibility(grid, notes);
