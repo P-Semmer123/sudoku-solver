@@ -3,7 +3,7 @@ import Grid from './components/grid'
 import { useRef } from 'react'
 
 function App() {
-  const gridRef = useRef<{ genNotes: () => void }>(null)
+  const gridRef = useRef<{ genNotes: () => void, trySolve: () => void }>(null)
 
   return (
     <>
@@ -13,6 +13,10 @@ function App() {
       <div className="buttonContainer container">
         <button onClick={() => gridRef.current?.genNotes()}>
           Generate Notes
+        </button>
+        <span></span>
+        <button onClick={() => gridRef.current?.trySolve()}>
+          Try to Solve
         </button>
       </div>
     </>

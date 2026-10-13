@@ -11,6 +11,7 @@
 
 .buttonContainer {
   height: 20vh;
+  gap: 16px
 }
 
 .buttonContainer button {

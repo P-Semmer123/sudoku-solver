@@ -2,6 +2,7 @@ import Row from './row'
 import './grid.css'
 import { forwardRef, useImperativeHandle, useRef, useState } from 'react';
 import { set_digit, get_notes } from '../solver/manage_notes';
+import { solve } from '../solver/solve/solve';
 import { check_solved } from '../solver/validate';
 
 interface GridProps {
@@ -10,7 +11,8 @@ interface GridProps {
 
 // needed for useImperativeHandle
 interface GridHandle {
-  genNotes: () => void
+  genNotes: () => void,
+  trySolve: () => void
 }
 
 function Grid({gridSize}: GridProps, ref: React.ForwardedRef<GridHandle>) {
@@ -38,6 +40,11 @@ function Grid({gridSize}: GridProps, ref: React.ForwardedRef<GridHandle>) {
   useImperativeHandle(ref, () => ({
     genNotes() {
       setNoteData(get_notes(gridData))
+    },
+    trySolve() {
+      const [newGridData, newNoteData] = solve(gridData, noteData)
+      setGridData(newGridData)
+      setNoteData(newNoteData)
     }
   }))
 

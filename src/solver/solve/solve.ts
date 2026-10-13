@@ -4,6 +4,7 @@ import {twins} from './solve_twin';
 import {last_possibility} from './solve_last_pos';
 import { check_solved } from '../validate';
 
+// TODO: Add input sanitation.
 export function solve(oldGrid: Array<Array<number>>, oldNotes: Array<Array<number>>): Array<Array<Array<number>>> {
     const max_iter = 30;
     let grid = oldGrid.map(r => [...r]);
