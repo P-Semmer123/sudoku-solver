@@ -42,9 +42,10 @@ function Grid({gridSize}: GridProps, ref: React.ForwardedRef<GridHandle>) {
       setNoteData(get_notes(gridData))
     },
     trySolve() {
-      const [newGridData, newNoteData] = solve(gridData, noteData)
+      const [newGridData, newNoteData] = solve(gridData)
       setGridData(newGridData)
       setNoteData(newNoteData)
+      setSolved(check_solved(newGridData))
     }
   }))
 
