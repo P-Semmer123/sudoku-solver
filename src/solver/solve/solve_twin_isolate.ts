@@ -1,5 +1,6 @@
+// Isolate "twins" within their row/column/subgrid
 // TODO: Generalize for triplets, etc.
-export function twins(oldNotes: Array<Array<number>>): Array<Array<number>> {
+export function isolate_twins(oldNotes: Array<Array<number>>): Array<Array<number>> {
     let notes = oldNotes.map(r => [...r]);
 
     notes = twin_row(notes);
@@ -16,7 +17,7 @@ export function twins(oldNotes: Array<Array<number>>): Array<Array<number>> {
  * ║ 7 8 9 │ 7 8 9 │ 7 8 9 │ 7 8 9 │ 7 8 9 │ 7 8 9 │ 7 8 9 │ 7 8 9 │ 7 8 9 ║ *
  * ╚═══════╧═══════╧═══════╧═══════╧═══════╧═══════╧═══════╧═══════╧═══════╝ *
  * When two numbers are only possible in two fields of a row/column, they    *
- * become the only two numbers that can go in those tiles:                   *
+ * become the only two numbers that can go in those fields:                  *
  * ╔═══════╤═══════╤═══════╤═══════╤═══════╤═══════╤═══════╤═══════╤═══════╗ *
  * ║ 1 2   │ 1 2   │     3 │     3 │     3 │     3 │     3 │     3 │     3 ║ *
  * ║       │       │ 4 5 6 │ 4 5 6 │ 4 5 6 │ 4 5 6 │ 4 5 6 │ 4 5 6 │ 4 5 6 ║ *
@@ -98,8 +99,8 @@ function twin_col(notes: Array<Array<number>>): Array<Array<number>> {
  * ║ 4 5 6 │ 4 5 6 │ 4 5 6 ║                       ║ 4 5 6 │ 4 5 6 │ 4 5 6 ║ *
  * ║ 7 8 9 │ 7 8 9 │ 7 8 9 ║                       ║ 7 8 9 │ 7 8 9 │ 7 8 9 ║ *
  * ╚═══════╧═══════╧═══════╝                       ╚═══════╧═══════╧═══════╝ *
- * If there's only one remaining note in a tile,                             *
- * "promote" that noted number to be the number in the grid.                 *
+ * When two numbers are only possible in two fields of a subgrid, they       *
+ * become the only two numbers that can go in those fields.                  *
  *****************************************************************************/
 
 // TODO: Support other grid sizes than 9x9

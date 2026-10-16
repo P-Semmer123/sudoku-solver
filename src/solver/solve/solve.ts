@@ -1,7 +1,7 @@
 import {cannons} from './solve_cannon';
 import {onlys} from './solve_only';
-import {twins} from './solve_twin';
-//import {twins_propagation} from './solve_twin_prop';
+import {isolate_twins} from './solve_twin_isolate';
+import {propagate_twins} from './solve_twin_propagate';
 import {xwings} from './solve_xwing';
 import {last_possibility} from './solve_last_pos';
 import {get_notes} from '../manage_notes';
@@ -18,8 +18,8 @@ export function solve(oldGrid: Array<Array<number>>): Array<Array<Array<number>>
     while(!check_solved(grid) && iter_cnt < max_iter) {
         notes = cannons(notes);
         notes = onlys(notes);
-        notes = twins(notes);
-        //notes = twins_propagation(notes);
+        notes = isolate_twins(notes);
+        notes = propagate_twins(notes);
         //notes = triple_entanglement(notes);
         notes = xwings(notes);
         //notes = triplets(notes);
