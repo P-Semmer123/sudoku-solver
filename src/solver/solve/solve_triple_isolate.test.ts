@@ -140,7 +140,7 @@ describe('isolate_triples', () => {
             [511,511,511,511,511,511,444,511,511]
         ])
     })
-    it('subgrid case, only twins notes', () => {
+    it('subgrid case, only twins', () => {
         expect(isolate_triples([
             [511,511,511,511,511,511,511,511,511],
             [511,511,511,511,511,511,511,511,511],

@@ -22,6 +22,9 @@ export function isolate_triples(oldNotes: Array<Array<number>>): Array<Array<num
  * ║       │       │       │ 7 8 9 │ 7 8 9 │ 7 8 9 │ 7 8 9 │ 7 8 9 │ 7 8 9 ║ *
  * ╚═══════╧═══════╧═══════╧═══════╧═══════╧═══════╧═══════╧═══════╧═══════╝ *
  *****************************************************************************/
+
+// TODO: Simplify. Row and col cases have a lot of overlap, thus functions 
+// should be restructured.
 function triple_row(notes: Array<Array<number>>): Array<Array<number>> {
     for (let row = 0; row < notes.length; ++row) {
         // Count occurrences of each note within row
@@ -96,6 +99,7 @@ function triple_col(notes: Array<Array<number>>): Array<Array<number>> {
  * ╚═══════╧═══════╧═══════╝                       ╚═══════╧═══════╧═══════╝ *
  *****************************************************************************/
 
+// TODO: Support other grid sizes than 9x9
 function triple_subgrid(notes: Array<Array<number>>): Array<Array<number>> {
     const sg_width = 3;
     const sg_height = 3;
