@@ -10,6 +10,9 @@ import {get_notes} from '../manage_notes';
 import { check_solved } from '../validate';
 
 // TODO: Add input sanitation.
+// TODO: Make solver "escalate". Smaller iterations, try easy things first, 
+// try harder methods only when easier methods don't yield results. This will 
+// also make a sensible hint function easier to implement.
 export function solve(oldGrid: Array<Array<number>>): Array<Array<Array<number>>> {
     const max_iter = 30;
     let grid = oldGrid.map(r => [...r]);
