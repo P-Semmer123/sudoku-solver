@@ -73,3 +73,15 @@ export default defineConfig([
 ])
 
 ```
+
+# Spring Boot
+
+Run `.\mvnw.cmd spring-boot:run` while in folder backend.
+
+Set database password as environment variable `$env:DB_PASSWORD = "YOUR_POSTGRES_PASSWORD"` in `backend/src/main/resources/application.properties`.
+
+Start PostgreSQL with `Start-Service -Name "postgresql-x64-18"` in PowerShell.
+
+Authentication via JWT.
+
+TODO: Build REST endpoints.
