@@ -1,10 +1,10 @@
-package com.sudokusolver.backend;
+package com.sudokusolver;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class BackendApplicationTests {
+class SudokuSolverApplicationTests {
 
 	@Test
 	void contextLoads() {

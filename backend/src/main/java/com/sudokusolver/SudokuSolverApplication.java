@@ -1,13 +1,13 @@
-package com.sudokusolver.backend;
+package com.sudokusolver;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BackendApplication {
+public class SudokuSolverApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(BackendApplication.class, args);
+		SpringApplication.run(SudokuSolverApplication.class, args);
 	}
 
 }
