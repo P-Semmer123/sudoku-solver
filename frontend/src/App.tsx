@@ -1,5 +1,6 @@
 import './App.css'
 import Grid from './components/grid'
+import HelloButton from './components/helloButton'
 import { useRef } from 'react'
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <button onClick={() => gridRef.current?.trySolve()}>
           Try to Solve
         </button>
+        <HelloButton />
       </div>
     </>
   )
