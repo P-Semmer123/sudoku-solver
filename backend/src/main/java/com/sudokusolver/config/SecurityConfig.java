@@ -17,7 +17,7 @@ public class SecurityConfig {
             auth -> {
                 auth.requestMatchers(
                     "/api/auth/register",
-                    //"/api/auth/csrf",
+                    "/api/auth/csrf",
                     "/api/hello"
                 ).permitAll();
                 auth.anyRequest().authenticated();
