@@ -1,27 +1,24 @@
+import { BrowserRouter, Routes, Route } from "react-router";
+import SudokuSolverPage from "./pages/SudokuSolverPage";
+import RegisterPage from "./pages/RegisterPage";
 import './App.css'
-import Grid from './components/grid'
-import HelloButton from './components/helloButton'
-import { useRef } from 'react'
 
 function App() {
-  const gridRef = useRef<{ genNotes: () => void, trySolve: () => void }>(null)
 
   return (
-    <>
-      <div className="gridContainer container">
-        <Grid ref={gridRef} gridSize={9}/>
-      </div>
-      <div className="buttonContainer container">
-        <button onClick={() => gridRef.current?.genNotes()}>
-          Generate Notes
-        </button>
-        <span></span>
-        <button onClick={() => gridRef.current?.trySolve()}>
-          Try to Solve
-        </button>
-        <HelloButton />
-      </div>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/"
+          element={<SudokuSolverPage/>}
+        />
+
+        <Route
+          path="/register"
+          element={<RegisterPage/>}
+        />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
