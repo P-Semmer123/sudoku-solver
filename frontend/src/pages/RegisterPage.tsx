@@ -84,6 +84,12 @@ function RegisterPage() {
                     autoComplete="new-password"
                 />
 
+                {passwordMismatch && (
+                    <p role="alert">
+                        Passwords do not match!
+                    </p>
+                )}
+
                 <button type="submit">
                     Register
                 </button>
