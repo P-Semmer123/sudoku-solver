@@ -2,6 +2,7 @@ package com.sudokusolver.service;
 
 import com.sudokusolver.entity.User;
 import com.sudokusolver.repository.UserRepository;
+import com.sudokusolver.exception.UsernameTakenException;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,9 +20,12 @@ public class RegistrationService {
     }
 
     @Transactional
+    // TODO: Fix possible race condition when two users try to create an 
+    // account using the same username. Doesn't currently break anything, but
+    // leads to - for the user - not understandable error.
     public User register(String username, String password) {
         if (userRepository.existsByUsername(username)) {
-            throw new IllegalArgumentException("Username already exists");
+            throw new UsernameTakenException("Username already exists");
         }
 
         String passwordHash = passwordEncoder.encode(password);

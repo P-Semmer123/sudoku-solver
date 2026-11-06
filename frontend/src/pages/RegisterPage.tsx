@@ -1,5 +1,10 @@
 import { useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+
+type RegisterRequest = {
+    username: string,
+    password: string
+}
 
 function RegisterPage() {
 
@@ -8,6 +13,11 @@ function RegisterPage() {
     const [passwordRepeat, setPasswordRepeat] = useState<string>("");
 
     const passwordMismatch = password !== passwordRepeat;
+    
+    const [loading, setLoading] = useState<boolean>(false);
+    const [error, setError] = useState<string>("");
+
+    const navigate = useNavigate();
 
     function handleUsernameChange(event: React.ChangeEvent<HTMLInputElement>) {
         setUsername(event.target.value);
@@ -24,18 +34,65 @@ function RegisterPage() {
     function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
         event.preventDefault();
 
-        if (passwordMismatch) {
+        if (passwordMismatch || loading) {
             return;
         }
 
-        const formData = new FormData(event.currentTarget);
-        
-        registerUser(formData);
+        registerUser({username, password});
     }
 
-    async function registerUser(formData: FormData) {
-        // TODO: Actual API call.
-        console.log(formData.get("username"));
+    async function registerUser(userData: RegisterRequest) {
+        setLoading(true);
+        setError("");
+
+        try {
+            const csrfResponse = await fetch("/api/auth/csrf");
+
+            if (!csrfResponse.ok) {
+                throw new Error("Couldn't retrieve CSRF token.");
+            }
+
+            const csrfData: {token: string} = await csrfResponse.json();
+            
+            const response = await fetch("/api/auth/register", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": csrfData.token
+                },
+                body: JSON.stringify(userData)
+            });
+
+            if (!response.ok) {
+                // Request might have hit CSRF protection of Spring Security.
+                if (response.status === 403) {
+                    throw new Error("Request forbidden. Check security config.")
+                }
+                
+                // When developing, vite proxy returns 502 if the backend is offline.
+                if (response.status === 502) {
+                    throw new Error("Could not connect to server.");
+                }
+                const errorMessage = await response.text();
+                throw new Error(errorMessage);
+            }
+
+            navigate("/");
+
+        } catch (err) {
+            if (err instanceof TypeError) {
+                setError("Could not connect to server.");
+            } else if (err instanceof Error) {
+                setError(err.message);
+            } else {
+                setError("An unexpected error occurred.");
+            }
+
+            console.error(err);
+
+        } finally {
+            setLoading(false);
+        }
     }
 
     return(
@@ -90,8 +147,14 @@ function RegisterPage() {
                     </p>
                 )}
 
-                <button type="submit">
-                    Register
+                {error && (
+                    <p role="alert">
+                        {error}
+                    </p>
+                )}
+
+                <button type="submit" disabled={loading}>
+                    {loading ? "Registering..." : "Register"}
                 </button>
             </form>
 

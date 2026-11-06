@@ -1,5 +1,7 @@
 package com.sudokusolver.config;
 
+import jakarta.servlet.DispatcherType;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,6 +17,9 @@ public class SecurityConfig {
         http
         .authorizeHttpRequests(
             auth -> {
+                auth.dispatcherTypeMatchers(
+                    DispatcherType.ERROR // Useful when database is offline among other things.
+                ).permitAll();
                 auth.requestMatchers(
                     "/api/auth/register",
                     "/api/auth/csrf",
